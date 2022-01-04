@@ -1,18 +1,9 @@
-﻿using System;
+﻿
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace MyTodosWPF
 {
@@ -26,11 +17,8 @@ namespace MyTodosWPF
         {
             InitializeComponent();
 
-            FileStream todoFile = new FileStream("My Todos.txt", FileMode.OpenOrCreate);
-            todoFile.Close();
 
-            List<string> myList = new List<string>();
-            myList = File.ReadAllLines(todoFile.Name).ToList();
+            List<string> myList = File.ReadAllLines(FilePath()).ToList();
             StoreToList(myList);
         }
 
@@ -43,18 +31,17 @@ namespace MyTodosWPF
         {
             if (todo_input.Text.Length != 0)
             {
-                FileStream todoFile = new FileStream("My Todos.txt", FileMode.OpenOrCreate);
-                todoFile.Close();
-
-                List<string> myList = new List<string>();
-                myList = File.ReadAllLines(todoFile.Name).ToList();
+                
+                List<string> myList = File.ReadAllLines(FilePath()).ToList();
 
                 myList.Add(todo_input.Text);
-                File.WriteAllLines(todoFile.Name, myList);
+                File.WriteAllLines(FilePath(), myList);
 
                 todo_input.Text = "";
 
-                StoreToList(myList);
+                StoreToList(myList); 
+
+                MessageBox.Show("Todo was added to the list successfuly", "Success", MessageBoxButton.OK);
 
             }
             else
@@ -67,8 +54,7 @@ namespace MyTodosWPF
 
         private void todos_list_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            MessageBox.Show(todos_list.SelectedIndex.ToString()+". "+ todos_list.SelectedItem.ToString(), "Todo",MessageBoxButton.OK, 
-                MessageBoxImage.Information);
+            MessageBox.Show(todos_list.SelectedItem.ToString(), "Todo",MessageBoxButton.OK);
 
         }
 
@@ -82,11 +68,7 @@ namespace MyTodosWPF
         private void todo_delete_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
-            FileStream todoFile = new FileStream("My Todos.txt", FileMode.OpenOrCreate);
-            todoFile.Close();
-
-            List<string> myList = new List<string>();
-            myList = File.ReadAllLines(todoFile.Name).ToList();
+            List<string> myList = GetTodoList();
 
             int selected = todo_delete.SelectedIndex;
             if(selected != -1)
@@ -94,14 +76,24 @@ namespace MyTodosWPF
 
                 myList.RemoveAt(selected);
                 MessageBox.Show("Todo is removed", "Todo", MessageBoxButton.OK);
-            File.WriteAllLines(todoFile.Name, myList);
-            StoreToList(myList);
+                File.WriteAllLines(FilePath(), myList);
+                StoreToList(myList);
             }
 
-            //MessageBox.Show(todo_delete.SelectedIndex.ToString(), "Todo", MessageBoxButton.OK);
+        }
 
+        List<string> GetTodoList()
+        {
+            return File.ReadAllLines(FilePath()).ToList();
+        }
 
+        string FilePath()
+        {
 
+            FileStream todoFile = new FileStream("My Todos.txt", FileMode.OpenOrCreate);
+            todoFile.Close();
+
+            return todoFile.Name;
         }
     }
 }

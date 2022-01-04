@@ -6,31 +6,43 @@
         xmlns:local="clr-namespace:MyTodosWPF"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+
     <Grid>
         <TabControl>
             <TabItem Header="Add Todo">
-                <Grid Background="#FFE5E5E5">
-                    <TextBox x:Name="todo_input" HorizontalAlignment="Center" Margin="0,0,0,100" TextWrapping="Wrap" VerticalAlignment="Center" Width="418" Height="229"/>
-                    <Button x:Name="submit_btn" Content="Submit" HorizontalAlignment="Left" Margin="531,286,0,0" VerticalAlignment="Top" Width="75" Height="31" Click="submit_btn_Click"/>
-                    <Button x:Name="clear_btn" Content="Clear" HorizontalAlignment="Left" Margin="438,286,0,0" VerticalAlignment="Top" Width="75" Height="31" Click="clear_btn_Click"/>
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <Grid Background="#FFE5E5E5">
+                        <TextBox x:Name="todo_input" Padding="5" HorizontalAlignment="Left" Margin="188,35,50,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="418" Height="229" FontSize="14" FontFamily="Bahnschrift"/>
+                        <Button x:Name="submit_btn" Foreground="Blue" Content="Submit" HorizontalAlignment="Left" Margin="531,286,0,0" VerticalAlignment="Top" Width="75" Height="31" Click="submit_btn_Click"/>
+                        <Button x:Name="clear_btn" Foreground="Blue" Content="Clear" HorizontalAlignment="Left" Margin="438,286,0,0" VerticalAlignment="Top" Width="75" Height="31" Click="clear_btn_Click"/>
 
-                </Grid>
+                    </Grid>
+
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="Remove Todo">
-                <Grid Background="#FFE5E5E5">
-                    
-                    <ListBox x:Name="todo_delete" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,53,0,0" SelectionChanged="todo_delete_SelectionChanged" FontSize="14" FontFamily="Bahnschrift SemiBold"/>
-                    <Label Content="Select Todo to delete" HorizontalContentAlignment="Center" Margin="242,11,242,0" VerticalAlignment="Top" Height="42" Width="310" FontFamily="Comic Sans MS" FontSize="18"/>
-                </Grid>
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <Grid Background="#FFE5E5E5">
+
+                        <ListBox x:Name="todo_delete" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,53,0,0" SelectionChanged="todo_delete_SelectionChanged" FontSize="14" FontFamily="Bahnschrift SemiBold" Grid.ColumnSpan="2"/>
+                        <Label Content="Select a Todo to delete" Margin="284,6,50,0" HorizontalContentAlignment="Left" VerticalAlignment="Top" Height="42" FontFamily="Comic Sans MS" FontSize="18"/>
+                    </Grid>
+
+                </ScrollViewer >
             </TabItem>
 
             <TabItem Header="View Todos">
-                <Grid Background="#FFE5E5E5">
-                    <ListBox x:Name="todos_list" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="todos_list_SelectionChanged"/>
-                </Grid>
+                <ScrollViewer ScrollViewer.HorizontalScrollBarVisibility="Auto" ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <Grid Background="#FFE5E5E5">
+                        <ListBox x:Name="todos_list" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="todos_list_SelectionChanged" FontFamily="Bahnschrift" FontSize="14"/>
+                    </Grid>
+
+                </ScrollViewer>
             </TabItem>
         </TabControl>
 
     </Grid>
+
+
 </Window>
